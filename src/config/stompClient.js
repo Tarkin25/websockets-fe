@@ -3,12 +3,12 @@ import SockJS from "sockjs-client";
 
 let stompClient = null;
 
-const getStompClient = (url, headers = {}, onConnect = stompClient => {}) => {
+const getStompClient = (url = "", headers = {}, onConnect = stompClient => {}) => {
   if (stompClient === null) {
     const socket = new SockJS(url);
 
     stompClient = Stomp.over(socket);
-    stompClient.debug = message => console.log(message);
+    stompClient.debug = message => console.debug(message);
     stompClient.connect(headers, frame => stompClient.connected = true);
   }
 
@@ -21,5 +21,7 @@ const getStompClient = (url, headers = {}, onConnect = stompClient => {}) => {
 
   return stompClient;
 };
+
+
 
 export default getStompClient;

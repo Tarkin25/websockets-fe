@@ -1,1 +1,2 @@
-java -jar /Volumes/Samsung_T5/Projects/Java/websockets/build/libs/websockets-1.0.jar
+cd /Volumes/Samsung_T5/Projects/Java/websockets
+./gradlew bootRun

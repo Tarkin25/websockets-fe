@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import API from '../config/api';
 import withStorage from './high-order/withStorage';
-import getStompClient from './stompClient';
+import getStompClient from '../config/stompClient';
 
 const MessageList = (props) => {
 
     const {chatId, load} = props;
 
     const [messages, setMessages] = useState([]);
-
-    const [stompClient, setStompClient] = useState(null);
-
-    const [subscription, setSubscription] = useState(null);
 
     useEffect(() => {
         API.get(`/chats/${chatId}/messages`)
@@ -25,20 +21,16 @@ const MessageList = (props) => {
             Authorization: load("token")
         };
 
-        const stompClient = getStompClient("http://localhost:8080/ws/secured", headers, client => {
-            const subscription = client.subscribe(`/chats/${chatId}/messages`, frame => {
+        getStompClient("http://localhost:8080/ws/secured", headers, client => {
+            client.subscribe(`/chats/${chatId}/messages`, frame => {
                 const message = JSON.parse(frame.body);
 
                 setMessages(messages => [...messages, message]);
-            });
-
-            setSubscription(subscription);
+            }, {id: chatId});
         });
 
-        setStompClient(stompClient);
-
         return () => {
-            console.log(subscription);
+            getStompClient().unsubscribe(chatId);
         }
     }, [chatId]);
 
