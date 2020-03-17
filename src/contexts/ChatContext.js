@@ -6,6 +6,7 @@ export const ChatContext = createContext();
 const ChatContextProvider = ({ children }) => {
   const [chats, setChats] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0); 
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     API.get("/user/chats").then(res => {
@@ -53,7 +54,7 @@ const ChatContextProvider = ({ children }) => {
   }
 
   return (
-      <ChatContext.Provider value={{chats, createChat, updateChat, deleteChat, selectChat, getSelectedChat}}>
+      <ChatContext.Provider value={{chats, createChat, updateChat, deleteChat, selectChat, getSelectedChat, search, setSearch}}>
           {children}
       </ChatContext.Provider>
   );
