@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext } from "react";
 import withStorage from "../components/high-order/withStorage";
 import API from "../config/api";
 import getStompClient from "../config/stompClient";
+import { v4 as uuidv4 } from 'uuid';
 
 export const MessageContext = createContext();
 
@@ -25,7 +26,9 @@ const MessageContextProvider = props => {
       Authorization: load("token")
     };
 
-    getStompClient(headers, client => {
+    const id = uuidv4();
+
+    getStompClient(headers).then(client => {
       client.subscribe(
         `/chats/${chatId}/messages`,
         frame => {
@@ -33,12 +36,12 @@ const MessageContextProvider = props => {
 
           setMessages(messages => [...messages, message]);
         },
-        { id: chatId }
-      );
+        id
+      )
     });
 
     return () => {
-      getStompClient().unsubscribe(chatId);
+      getStompClient().then(client => client.unsubscribe(id));
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatId]);
