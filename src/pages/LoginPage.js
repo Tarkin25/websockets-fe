@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useContext } from "react";
 import { withRouter } from "react-router-dom";
-import Header from "../components/Header";
+import Header from "../components/bootstrap/Header";
 import API from "../config/api";
 import withStorage from "../components/high-order/withStorage";
 import { UserContext } from "../contexts/UserContext";

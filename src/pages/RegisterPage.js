@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from "react";
-import Header from "../components/Header";
+import Header from "../components/bootstrap/Header";
 import API from "../config/api";
 import { withRouter } from "react-router-dom";
 import withAlert from "../components/high-order/withAlert";

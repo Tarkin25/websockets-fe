@@ -13,8 +13,12 @@ const withStorage = (WrappedComponent) => (props) => {
         localStorage.setItem(key, JSON.stringify(value));
     }
 
+    const remove = (key) => {
+        localStorage.removeItem(key);
+    }
+
     return (
-        <WrappedComponent load={load} save={save} {...props}/>
+        <WrappedComponent load={load} save={save} remove={remove} {...props}/>
     )
 }
 

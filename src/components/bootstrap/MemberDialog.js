@@ -3,7 +3,7 @@ import Dialog from "./dialog/Dialog";
 import DialogHeader from "./dialog/DialogHeader";
 import DialogTitle from "./dialog/DialogTitle";
 import DialogBody from "./dialog/DialogBody";
-import API from "../config/api";
+import API from "../../config/api";
 
 const MemberDialog = props => {
   const { open = true, onClose, onAdd, chatId } = props;

@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const MessageContext = createContext();
 
 const MessageContextProvider = props => {
-  const { chatId, load, children, style } = props;
+  const { chatId, load, children, className } = props;
 
   const [messages, setMessages] = useState([]);
 
@@ -48,7 +48,7 @@ const MessageContextProvider = props => {
 
   return (
     <MessageContext.Provider value={{ messages, postMessage }}>
-      <div style={style}>{children}</div>
+      <div className={className}>{children}</div>
     </MessageContext.Provider>
   );
 };

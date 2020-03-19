@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { ChatContext } from '../../contexts/ChatContext';
+import { ChatContext } from '../../../contexts/ChatContext';
 
 const ChatSearchBar = ({style}) => {
     const {setSearch} = useContext(ChatContext);

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { ChatContext } from "../../contexts/ChatContext";
+import { ChatContext } from "../../../contexts/ChatContext";
 
 const ChatList = props => {
   const {style} = props;

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import ChatDialog from "./ChatDialog";
-import { ChatContext } from "../../contexts/ChatContext";
+import { ChatContext } from "../../../contexts/ChatContext";
 import ChatList from "./ChatList";
 import ChatSearchBar from "./ChatSearchBar";
 

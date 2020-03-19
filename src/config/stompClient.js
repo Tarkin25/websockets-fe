@@ -20,7 +20,7 @@ const getStompClient = (headers = {}) => new Promise((resolve, reject) => {
   }
 });
 
-export class SimpleStompClient {
+class SimpleStompClient {
 
   constructor(url) {
     const socket = new SockJS(url);
