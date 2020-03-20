@@ -10,8 +10,7 @@ const useStyle = makeStyles(theme => ({
     height: "100%"
   },
   inputWrapper: {
-    padding: theme.spacing(0.5, 0.5, 0.5, 1),
-    width: "100%",
+    padding: theme.spacing(1, 0.5, 0.5, 1),
     background: theme.palette.secondary.dark
   },
   input: {
@@ -21,7 +20,8 @@ const useStyle = makeStyles(theme => ({
     borderRadius: theme.spacing(2),
     "&:focus": {
       outline: "none"
-    }
+    },
+    fontSize: "16px"
   },
   flex: {
     display: "flex"

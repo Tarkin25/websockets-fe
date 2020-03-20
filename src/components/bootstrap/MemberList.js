@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import API from "../../config/api";
 import MemberDialog from "./MemberDialog";
 import {
@@ -27,6 +27,9 @@ const useStyle = makeStyles(theme => ({
   },
   members: {
     height: `calc(100% - ${headerHeight})`,
+    overflow: "auto"
+  },
+  list: {
     padding: theme.spacing(2)
   },
   member: {
@@ -75,20 +78,20 @@ const MemberList = props => {
   }, [chatId]);
 
   return (
-    <Fragment>
-      <div className={classes.root}>
-        <AppBar position="static" color="secondary">
-          <Toolbar>
-            <Typography className={classes.grow}>Members</Typography>
-            <Tooltip title="Add Member">
-              <IconButton onClick={() => setDialogOpen(true)}>
-                <AddIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
-          </Toolbar>
-        </AppBar>
+    <div className={classes.root}>
+      <AppBar position="static" color="secondary">
+        <Toolbar>
+          <Typography className={classes.grow}>Members</Typography>
+          <Tooltip title="Add Member">
+            <IconButton onClick={() => setDialogOpen(true)}>
+              <AddIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Toolbar>
+      </AppBar>
 
-        <List className={classes.members}>
+      <div className={classes.members}>
+        <List className={classes.list}>
           {members.map((member, index) => (
             <ListItem key={"member-" + index} className={classes.member}>
               <ListItemText>{member.username}</ListItemText>
@@ -109,7 +112,7 @@ const MemberList = props => {
         onClose={() => setDialogOpen(false)}
         chatId={chatId}
       />
-    </Fragment>
+    </div>
   );
 };
 

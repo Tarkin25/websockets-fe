@@ -6,17 +6,17 @@ import SendIcon from "@material-ui/icons/Send";
 const useStyle = makeStyles(theme => ({
   inputWrapper: {
     padding: theme.spacing(1, 1, 1, 2),
-    width: "100%",
     background: theme.palette.secondary.dark
   },
   input: {
     border: "none",
     maxWidth: "100%",
-    padding: theme.spacing(1, 2, 1, 2),
-    borderRadius: theme.spacing(2),
+    padding: theme.spacing(1.5, 2, 1.5, 2),
+    borderRadius: theme.spacing(3),
     "&:focus": {
       outline: "none"
-    }
+    },
+    fontSize: "16px"
   },
   icon: {},
   grow: {
