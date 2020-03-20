@@ -10,33 +10,18 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 const headerHeight = "64px";
 const inputHeight = "60px";
 
-const styles = {
-  root: {
-    height: "100%"
-  },
-  header: {
-    height: headerHeight
-  },
-  input: {
-    height: inputHeight
-  },
-  messages: {
-    height: `calc(100% - ${inputHeight})`,
-    overflowX: "hidden",
-    overflowY: "auto",
-    marginBottom: 0
-  },
-  messageSection: {
-    height: `calc(100% - ${headerHeight})`
-  },
-};
-
 const displayTypes = {
   MESSAGES: "message",
   MEMBERS: "members"
 }
 
 const useStyle = makeStyles(theme => ({
+  root: {
+    height: "100%"
+  },
+  appBar: {
+    
+  },
   headerTitle: {
     flexGrow: 1
   },
@@ -85,8 +70,8 @@ const SelectedChat = props => {
     switch(display) {
       case displayTypes.MESSAGES:
         return (
-          <div style={styles.root}>
-            <AppBar color="secondary" position="static">
+          <div className={classes.root}>
+            <AppBar color="secondary" position="static" className={classes.appBar}>
               <Toolbar>
                 <Typography variant="h6" className={classes.headerTitle}>
                   {selectedChat.name}
@@ -109,8 +94,8 @@ const SelectedChat = props => {
 
       case displayTypes.MEMBERS:
         return (
-          <div style={styles.root}>
-            <AppBar color="secondary" position="static">
+          <div className={classes.root}>
+            <AppBar color="secondary" position="static" className={classes.appBar} >
               <Toolbar>
                 <Typography variant="h6" className={classes.headerTitle}>
                   {selectedChat.name}
@@ -119,7 +104,9 @@ const SelectedChat = props => {
               </Toolbar>
             </AppBar>
     
-            <MemberList chatId={selectedChat.id}  style={styles.messageSection} />
+            <div className={classes.messageSection}>
+              <MemberList chatId={selectedChat.id} />
+            </div>
 
           </div>
         );

@@ -1,2 +1,2 @@
-cd ../../Java/websockets
+cd ../websockets
 .\gradlew.bat bootRun

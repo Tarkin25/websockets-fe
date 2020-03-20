@@ -3,11 +3,13 @@ import ChatDialog from "./ChatDialog";
 import { ChatContext } from "../../../contexts/ChatContext";
 import ChatList from "./ChatList";
 import ChatSearchBar from "./ChatSearchBar";
+import { makeStyles, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
+import AddIcon from "@material-ui/icons/Add";
 
-const headerHeight = "58px";
-const searchBarHeight = "38px";
+const headerHeight = "64px";
+const searchBarHeight = "52px";
 
-const styles = {
+const useStyle = makeStyles(theme => ({
   root: {
     height: "100%"
   },
@@ -19,32 +21,37 @@ const styles = {
   },
   chats: {
     height: `calc(100% - ${headerHeight} - ${searchBarHeight})`,
-    overflowY: "auto",
-    overflowX: "hidden"
+  },
+  grow: {
+    flexGrow: 1
   }
-};
+}));
 
 const ChatDisplay = props => {
+  const classes = useStyle();
+
   const { createChat } = useContext(ChatContext);
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
   return (
-    <div style={styles.root}>
-      <div className="navbar bg-light border" style={styles.header}>
-        <div className="navbar-brand">Chats</div>
-        <div className="navbar-nav">
-          <li className="nav-item">
-            <button className="btn btn-sm" onClick={() => setDialogOpen(true)}>
-              <i className="fas fa-plus" />
-            </button>
-          </li>
-        </div>
+    <div className={classes.root}>
+      <AppBar position="static" color="secondary" className={classes.header}>
+        <Toolbar>
+          <Typography variant="h6" className={classes.grow}>Chats</Typography>
+            <IconButton title="Create chat" onClick={() => setDialogOpen(true)} >
+              <AddIcon />
+            </IconButton>
+        </Toolbar>
+      </AppBar>
+
+      <div className={classes.searchBar}>
+        <ChatSearchBar />
       </div>
 
-      <ChatSearchBar style={styles.searchBar} />
-
-      <ChatList style={styles.chats} />
+      <div className={classes.chats}>
+        <ChatList />
+      </div>
 
       <ChatDialog
         open={dialogOpen}

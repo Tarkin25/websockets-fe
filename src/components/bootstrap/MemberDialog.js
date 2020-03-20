@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Dialog from "./dialog/Dialog";
-import DialogHeader from "./dialog/DialogHeader";
-import DialogTitle from "./dialog/DialogTitle";
-import DialogBody from "./dialog/DialogBody";
 import API from "../../config/api";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  FormControl,
+  Select,
+  MenuItem,
+  DialogActions,
+  Button
+} from "@material-ui/core";
 
 const MemberDialog = props => {
   const { open = true, onClose, onAdd, chatId } = props;
@@ -13,65 +19,51 @@ const MemberDialog = props => {
   const [users, setUsers] = useState([]);
 
   const handleChangeUserId = e => {
-      setUserId(e.target.value);
-  }
+    setUserId(e.target.value);
+  };
 
   const handleSubmit = e => {
-      e.preventDefault();
+    e.preventDefault();
 
-      onAdd(userId);
+    onAdd(userId);
 
-      onClose();
-  }
-
-  useEffect(() => {
-    API.get(`/users?excludeChatId=${chatId}`)
-    .then(res => {
-        setUsers(res.data);
-
-        if(res.data.length > 0) {
-            setUserId(res.data[0].id);
-        }
-    })
-  }, [open, chatId]);
+    onClose();
+  };
 
   useEffect(() => {
-    const eventListener = document.addEventListener("keydown", e => {
-      if(e.key === "Escape") {
-        onClose();
+    API.get(`/users?excludeChatId=${chatId}`).then(res => {
+      setUsers(res.data);
+
+      if (res.data.length > 0) {
+        setUserId(res.data[0].id);
       }
     });
-
-    return () => {
-      document.removeEventListener("keydown", eventListener);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  }, [open, chatId]);
 
   return (
-    <Dialog open={open}>
-      <DialogHeader>
+    <Dialog open={open} onClose={onClose}>
+      <form onSubmit={handleSubmit}>
         <DialogTitle>Add Member</DialogTitle>
-        <button className="close" onClick={onClose}>
-          &times;
-        </button>
-      </DialogHeader>
-
-      <DialogBody>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <select className="form-control" value={userId} onChange={handleChangeUserId}>
-              {users.map(user => (
-                  <option value={user.id} key={user.id}>{user.username}</option>
+        <DialogContent>
+          <FormControl>
+            <Select value={userId} onChange={handleChangeUserId}>
+              {users.map((user, index) => (
+                <MenuItem key={"user-" + index} value={user.id}>
+                  {user.username}
+                </MenuItem>
               ))}
-            </select>
-          </div>
-
-          <div className="form-group">
-              <button className="btn btn-dark" type="submit">Add</button>
-          </div>
-        </form>
-      </DialogBody>
+            </Select>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" color="primary" type="submit">
+            Add
+          </Button>
+          <Button variant="outlined" color="primary" onClick={onClose}>
+            Cancel
+          </Button>
+        </DialogActions>
+      </form>
     </Dialog>
   );
 };

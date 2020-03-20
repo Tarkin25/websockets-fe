@@ -1,31 +1,90 @@
-import React, { useState, useContext } from 'react'
-import { ChatContext } from '../../../contexts/ChatContext';
+import React, { useState, useContext } from "react";
+import { ChatContext } from "../../../contexts/ChatContext";
+import { makeStyles, FormControl, IconButton } from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+import CloseIcon from "@material-ui/icons/Close";
+import KeyListener from '../../KeyListener';
 
-const ChatSearchBar = ({style}) => {
-    const {setSearch} = useContext(ChatContext);
-
-    const [input, setInput] = useState("");
-
-    const handleChangeInput = e => setInput(e.target.value);
-
-    const handleSubmit = e => {
-        e.preventDefault();
-
-        setSearch(input);
+const useStyle = makeStyles(theme => ({
+  root: {
+    height: "100%"
+  },
+  inputWrapper: {
+    padding: theme.spacing(0.5, 0.5, 0.5, 1),
+    width: "100%",
+    background: theme.palette.secondary.dark
+  },
+  input: {
+    border: "none",
+    maxWidth: "100%",
+    padding: theme.spacing(1, 2, 1, 2),
+    borderRadius: theme.spacing(2),
+    "&:focus": {
+      outline: "none"
     }
+  },
+  flex: {
+    display: "flex"
+  },
+  grow: {
+    flexGrow: 1
+  },
+  button: {
+    "&:focus": {
+      outline: "none"
+    }
+  }
+}));
 
-    return (
-        <div style={style}>
-            <form className="form-inline" style={{width: "100%"}} onSubmit={handleSubmit}>
-                <div className="input-group" style={{width: "100%"}}>
-                    <input className="form-control" placeholder="Search" value={input} onChange={handleChangeInput} />
-                    <div className="input-group-append">
-                        <button type="submit" className="btn btn-sm btn-secondary"><i className="fas fa-search"></i></button>
-                    </div>
-                </div>
-            </form>
+const ChatSearchBar = () => {
+  const classes = useStyle();
+
+  const { setSearch } = useContext(ChatContext);
+
+  const [input, setInput] = useState("");
+
+  const handleChangeInput = e => {
+    if (input !== "" || e.target.value !== " ") {
+      setInput(e.target.value);
+      setSearch(e.target.value);
+    }
+  };
+
+  const resetSearch = () => {
+    setInput("");
+    setSearch("");
+  };
+
+  return (
+    <div className={classes.root}>
+      <div className={classes.inputWrapper}>
+        <div className={classes.flex}>
+          <FormControl className={classes.grow}>
+            <input
+              value={input}
+              onChange={handleChangeInput}
+              placeholder="Search chat"
+              className={classes.input}
+            />
+          </FormControl>
+          <FormControl>
+            {input === "" ? (
+              <IconButton disabled className={classes.button}>
+                <SearchIcon fontSize="small" />
+              </IconButton>
+            ) : (
+              <div>
+                  <KeyListener action={resetSearch} keys={["Escape"]} />
+                <IconButton className={classes.button} onClick={resetSearch}>
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              </div>
+            )}
+          </FormControl>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
-export default ChatSearchBar
+export default ChatSearchBar;

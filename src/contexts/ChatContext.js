@@ -34,6 +34,10 @@ const ChatContextProvider = ({ children }) => {
   }
 
   const deleteChat = (index) => {
+    if(index === selectedIndex) {
+      setSelectedIndex(selectedIndex - 1);
+    }
+
     return API.delete(`/chats/${chats[index].id}`)
     .then(res => {
         const newChats = chats;

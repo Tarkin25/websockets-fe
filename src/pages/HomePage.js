@@ -102,7 +102,9 @@ const HomePage = props => {
             </div> */}
             <Grid container direction="row">
               <Grid item xs={4} className={classes.borderRight}>
-                <ChatDisplay  className={classes.content} />
+                <div className={classes.content} >
+                  <ChatDisplay />
+                </div>
               </Grid>
               <Grid item xs={8} className={classes.content}>
                 <SelectedChat />
